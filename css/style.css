@@ -1339,17 +1339,32 @@ header {
     width: 50%;
     padding: 30px 50px;
     box-sizing: border-box;
-    opacity: 1;
-    transform-origin: center;
-    transition: opacity 0.3s ease, transform 0.3s ease;
+    opacity: 0; /* Start invisible */
+    transform: translateY(50px); /* Start below final position */
+    transition: all 0.6s ease;
 }
 
+/* Left and Right Container Positioning */
+.left-container {
+    left: 0;
+}
+
+.right-container {
+    left: 50%;
+}
+
+/* Animation for containers */
 .container.animate {
     opacity: 1;
     transform: translateY(0);
 }
 
-/* Text Box Styling */
+/* Container animation delays */
+.container:nth-child(1) { transition-delay: 0.2s; }
+.container:nth-child(2) { transition-delay: 0.4s; }
+.container:nth-child(3) { transition-delay: 0.6s; }
+
+/* Text Box hover effect */
 .text-box {
     padding: 25px 35px;
     background: rgba(57, 177, 185, 0.95);
@@ -1365,53 +1380,27 @@ header {
     z-index: 2;
 }
 
-/* Container Images */
-.container img {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border: 3px solid var(--main-color);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    z-index: 10;
-    object-fit: cover;
+.text-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
 }
 
-.left-container img {
-    right: -20px;
-}
-
-.right-container img {
-    left: -20px;
-}
-
-/* Responsive Design */
-@media (max-width: 991px) {
-    .timeline {
-        margin: 50px auto;
+/* Timeline glow animation */
+@keyframes glowLine {
+    0%, 100% {
+        box-shadow: 0 0 15px var(--main-color);
     }
-
-    .text-box {
-        padding: 20px 30px;
+    50% {
+        box-shadow: 0 0 25px var(--main-color);
     }
 }
 
+/* Responsive adjustments */
 @media (max-width: 768px) {
-    .timeline {
-        padding: 10px 0;
-    }
-
-    .timeline::after {
-        left: 10px;
-        transform: none;
-        width: 3px;
-    }
-
     .container {
         width: 100%;
         padding: 20px 20px 20px 50px;
+        left: 0; /* Reset left position for both containers */
     }
 
     .left-container,
@@ -1419,47 +1408,13 @@ header {
         left: 0;
     }
 
-    .left-container-arrow,
-    .right-container-arrow {
-        display: none;
+    /* Adjust animation for mobile */
+    .container {
+        transform: translateX(-50px);
     }
 
-    .text-box {
-        padding: 15px 20px;
-        font-size: 1.4rem;
-        max-width: 100%;
-    }
-
-    .text-box h3 {
-        font-size: 1.8rem;
-    }
-
-    .text-box small {
-        font-size: 1.2rem;
-    }
-
-    .text-box ul {
-        margin-left: 15px;
-    }
-
-    .container img {
-        position: static;
-        margin: 0 auto 15px auto;
-        display: block;
-    }
-}
-
-/* Animation Control for Reduced Motion */
-@media (prefers-reduced-motion: reduce) {
-    .container,
-    .timeline::after,
-    .text-box {
-        animation: none;
-        transition: none;
-    }
-
-    .text-box:hover {
-        transform: none;
+    .container.animate {
+        transform: translateX(0);
     }
 }
 
