@@ -54,21 +54,8 @@ header {
 
 /* Navbar Styling */
 .navbar {
-    position: fixed;
-    top: 0;
-    right: -100%;
-    width: 100%;
-    padding: 2rem 9%;
-    background: var(--bg-color);
     display: flex;
-    justify-content: flex-end;
     align-items: center;
-    z-index: 100;
-    transition: 0.5s ease;
-}
-
-.navbar.active {
-    right: 0;
 }
 
 .navbar a {
@@ -76,11 +63,6 @@ header {
     color: var(--text-color);
     margin-left: 4rem;
     transition: 0.3s;
-}
-
-.navbar a:hover,
-.navbar a.active {
-    color: var(--main-color);
 }
 
 #menu-icon {
@@ -117,16 +99,16 @@ header {
     .navbar {
         position: absolute;
         top: 100%;
-        left: 0;
+        left: -100%; /* Start from left instead of right */
         width: 100%;
         padding: 1rem 4%;
         background: var(--bg-color);
-        border-top: .1rem solid rgba(0, 0, 0, .2);
         box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .2);
         display: none;
     }
 
-    .navbar.show {
+    .navbar.active {
+        left: 0; /* Slide in from left */
         display: block;
     }
 
@@ -134,13 +116,11 @@ header {
         display: block;
         font-size: 2rem;
         margin: 3rem 0;
-        padding: 0;
+        text-align: center;
     }
 
-    .navbar a:hover,
-    .navbar a.active {
+    .navbar a:hover {
         color: var(--main-color);
-        transform: translateX(10px);
     }
 
     .navbar a::after {
