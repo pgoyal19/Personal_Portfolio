@@ -1395,12 +1395,20 @@ header {
     }
 }
 
-/* Responsive adjustments */
+/* Mobile Timeline Adjustments */
 @media (max-width: 768px) {
+    .timeline::after {
+        left: 31px;  /* Align timeline with images */
+        transform: none;
+        width: 4px;
+    }
+
     .container {
         width: 100%;
-        padding: 20px 20px 20px 50px;
-        left: 0; /* Reset left position for both containers */
+        padding-left: 70px;  /* Give space for timeline and image */
+        padding-right: 25px;
+        opacity: 0;
+        transform: translateX(-50px);  /* Start from left */
     }
 
     .left-container,
@@ -1408,13 +1416,59 @@ header {
         left: 0;
     }
 
-    /* Adjust animation for mobile */
-    .container {
-        transform: translateX(-50px);
+    /* Adjust image positioning for mobile */
+    .container img {
+        width: 50px;
+        height: 50px;
+        left: 6px;  /* Align with timeline */
+        top: 50%;
+        transform: translateY(-50%);
+        position: absolute;
     }
 
+    /* Reset image positions for both containers */
+    .left-container img,
+    .right-container img {
+        left: 6px;
+        right: auto;
+    }
+
+    /* Adjust circle connectors */
+    .left-container::after,
+    .right-container::after {
+        left: 28px;
+        width: 10px;
+        height: 10px;
+    }
+
+    /* Animation for mobile */
     .container.animate {
+        opacity: 1;
         transform: translateX(0);
+    }
+
+    /* Text box adjustments */
+    .text-box {
+        padding: 15px 20px;
+        font-size: 1.4rem;
+        margin-left: 0;
+    }
+
+    /* Ensure smooth animation transition */
+    .container {
+        transition: all 0.5s ease-in-out;
+    }
+}
+
+/* Add smooth scroll behavior for all screen sizes */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Prevent animation flicker */
+@media (prefers-reduced-motion: no-preference) {
+    .container {
+        will-change: transform, opacity;
     }
 }
 
