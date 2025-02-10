@@ -1283,8 +1283,9 @@ header {
     margin-bottom: 2rem;
 }
 
-
 .experience h2 {
+    position: relative;
+    z-index: 2;
     font-size: 4.5rem;
     text-align: center;
     font-weight: 700;
@@ -1292,16 +1293,26 @@ header {
     margin-bottom: 0.5rem;
     color: var(--main-color);
     text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-    position: relative;
     padding-bottom: 5px;
+}
+
+.experience-container {
+    position: relative;
+    z-index: 1;
+    width: 100%; /* or your desired width */
+    min-height: 100px; /* or your desired height */
+    /* Check if there's proper padding/margin */
+    padding: 20px;
+    margin: 20px 0;
 }
 
 
 /* Timeline Section*/
 .timeline {
     position: relative;
+    z-index: 2;
     max-width: 1200px;
-    margin: 100px auto;
+    margin: 50px auto;
     padding: 20px 0;
 }
 
@@ -1315,7 +1326,7 @@ header {
     width: 6px;
     height: 100%;
     background: var(--main-color);
-    z-index: -1;
+    z-index: 1;
     box-shadow: 0 0 15px var(--main-color);
     animation: glowLine 2s infinite;
 }
@@ -1332,6 +1343,7 @@ header {
 /* Container Styling */
 .container {
     position: relative;
+    z-index: 3;
     width: 50%;
     padding: 30px 50px;
     box-sizing: border-box;
@@ -1777,4 +1789,5 @@ header {
 .footer a:hover {
     text-decoration: underline;
 }
+
 
