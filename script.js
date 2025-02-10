@@ -4,54 +4,26 @@ const form = document.forms['submit-to-google-sheet'];
 if (form) {
     form.addEventListener('submit', e => {
         e.preventDefault();
+        const submitButton = form.querySelector('button[type="submit"]');
+        if (submitButton) submitButton.disabled = true;
+
         fetch(scriptURL, { method: 'POST', body: new FormData(form) })
             .then(response => {
-                console.log('Success!', response);
+                if (!response.ok) throw new Error('Network response was not ok');
                 alert("Message sent successfully!");
+                form.reset();
             })
-            .catch(error => console.error('Error!', error.message));
+            .catch(error => {
+                console.error('Error!', error.message);
+                alert("Failed to send message. Please try again.");
+            })
+            .finally(() => {
+                if (submitButton) submitButton.disabled = false;
+            });
     });
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    const menuIcon = document.getElementById('menu-icon');
-    const navbar = document.querySelector('.navbar');
-
-    if (menuIcon && navbar) {
-        menuIcon.addEventListener('click', () => {
-            navbar.classList.toggle('show');
-        });
-    }
-
-    document.querySelectorAll('.navbar a').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const targetElement = document.querySelector(this.getAttribute('href'));
-
-            if (targetElement) {
-                targetElement.scrollIntoView({
-                    behavior: 'smooth'
-                });
-            }
-        });
-    });
-
-    // About section observer
-    const aboutMeSection = document.querySelector(".about-me");
-
-    if (aboutMeSection) {
-        const observer = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    aboutMeSection.classList.add("visible");
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.3 });
-
-        observer.observe(aboutMeSection);
-    }
-
     // Timeline animation
     const observerOptions = { root: null, threshold: 0.2, rootMargin: '0px' };
     const timelineObserver = new IntersectionObserver((entries) => {
@@ -66,31 +38,4 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll('.container').forEach(container => {
         timelineObserver.observe(container);
     });
-
-    // Smooth scroll for about section links
-    document.querySelectorAll('a[href^="#about"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const targetElement = document.querySelector(this.getAttribute('href'));
-
-            if (targetElement) {
-                targetElement.scrollIntoView({
-                    behavior: 'smooth'
-                });
-            }
-        });
-    });
-
-    // Contact form handling
-    const contactForm = document.getElementById("contact-form");
-    if (contactForm) {
-        contactForm.addEventListener("submit", function (event) {
-            event.preventDefault();
-            const formData = new FormData(this);
-            const formObj = {};
-            formData.forEach((value, key) => {
-                formObj[key] = value;
-            });
-        });
-    }
 });
